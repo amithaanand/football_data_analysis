@@ -6,8 +6,8 @@
 from pyspark.sql import SparkSession
 spark=SparkSession.builder.appName('project1').getOrCreate()
 #load data from hdfs
-uefa=spark.read.options(header=True,inferSchema=True).csv('hdfs://localhost:9000/sparkproject1/UEFAChampionsLeague2004-2021.csv')
-uefa.show()
+# uefa=spark.read.options(header=True,inferSchema=True).csv('hdfs://localhost:9000/sparkproject1/UEFAChampionsLeague2004-2021.csv')
+# uefa.show()
 # to print column names
 # for i in uefa.columns:
 #     print(i)
@@ -83,35 +83,27 @@ uefa.show()
 
 # Analysis 2: teams that most appeared in quarterfinals,semifinals and final
 
-qf=uefa.filter(uefa['round']=='round : quarterfinals')
-sf=uefa.filter(uefa['round']=='round : semifinals')
-fi=uefa.filter(uefa['round']=='round : final')
-qf.show()
-qf.select("*").show()
-
-qf.select(qf["`s.no`"],qf["`homeTeam`"],qf["`round`"],qf["`date`"]).show()
-sf.select(sf["`s.no`"],sf["`homeTeam`"],sf["`round`"],sf["`date`"]).show()
-fi.select(fi["`s.no`"],fi["`homeTeam`"],fi["`round`"],fi["`date`"]).show()
-
-# modify table
-# qf=qf.select('s.no','homeTeam','round','date')
-# sf=sf.select('s.no','homeTeam','round','date')
-# fi=fi.select('s.no','homeTeam','round','date')
-
+# qf=uefa.filter(uefa['round']=='round : quarterfinals')
+# sf=uefa.filter(uefa['round']=='round : semifinals')
+# fi=uefa.filter(uefa['round']=='round : final')
 # qf.show()
-# sf.show()
-# fi.show()
-# #grouping
-import pyspark.sql.functions as f
-li=[qf,sf,fi]
-for i in li:
-    out1=i.groupBy('homeTeam').agg(f.count("`s.no`").alias('no_of_participation'))
-    # out1.show()
-    out2=out1.orderBy('no_of_participation',ascending=False)
-    out2.show()
+# qf.select("*").show()
 
-    maxvalue=out2.select(f.max(out2.no_of_participation))
-    maxvalue.show()
-    print(maxvalue.collect()[0])
-    print('.................................')
+# qf.select(qf["`s.no`"],qf["`homeTeam`"],qf["`round`"],qf["`date`"]).show()
+# sf.select(sf["`s.no`"],sf["`homeTeam`"],sf["`round`"],sf["`date`"]).show()
+# fi.select(fi["`s.no`"],fi["`homeTeam`"],fi["`round`"],fi["`date`"]).show()
+
+# #grouping
+# import pyspark.sql.functions as f
+# li=[qf,sf,fi]
+# for i in li:
+#     out1=i.groupBy('homeTeam').agg(f.count("`s.no`").alias('no_of_participation'))
+#     # out1.show()
+#     out2=out1.orderBy('no_of_participation',ascending=False)
+#     out2.show()
+
+#     maxvalue=out2.select(f.max(out2.no_of_participation))
+#     maxvalue.show()
+#     print(maxvalue.collect()[0])
+#     print('.................................')
 
