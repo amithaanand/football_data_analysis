@@ -1,5 +1,7 @@
 # football_data_analysis
 
+Here I have taken Football datas from kaggle and using python mathplotlib and sql i have analysed the queies.
+
 Analysis-1
 Draw a graph of away team and home team goal scoring in each year of quarterfinal,semifinal and final (plot it as 2 graph).
 
